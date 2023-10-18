@@ -2,7 +2,8 @@ pipeline {
     agent {
         docker {
             image 'node:lts-buster-slim'
-            args '-p 3000:3000'
+            args '-u root' // Add any additional Docker arguments if needed
+            ports '3000:3000'
         }
     }
     environment {
@@ -14,5 +15,12 @@ pipeline {
                 sh 'npm install'
             }
         }
+        stage('Run') {
+            steps {
+                sh 'npm start' # Adjust the start command as per your application
+            }
+        }
+        // Add more stages as needed for your pipeline
     }
 }
+
