@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Run') {
             steps {
-                sh 'npm start' # Adjust the start command as per your application
+                sh 'npm start' // Adjust the start command as per your application
             }
         }
         // Add more stages as needed for your pipeline
