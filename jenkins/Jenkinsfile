@@ -33,20 +33,6 @@ pipeline {
          sh 'npm run build'
       }
     }
-    stage('Build Docker Image') {
-      steps {
-        withCredentials([usernamePassword(credentialsId: 'f2833fba-ddd6-46dd-a4af-0e02f64368d4')]) {
-        script {
-                        def dockerImage = docker.build('veerabhadraswami/tictactoe:latest')
-                        // Replace 'your-docker-repo', 'your-image-name', and 'your-tag' with your specific values.
-
-                        // Push the Docker image to Docker Hub
-                       // docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials-id') {
-                       //     dockerImage.push()
-                        }
-        }
-      }
-    }
     
   }
 }
