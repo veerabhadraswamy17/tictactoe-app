@@ -17,7 +17,14 @@ pipeline {
         
     stage('Install dependencies') {
       steps {
-        sh 'npm install'
+        script {
+                    // Your Node.js build script
+                    sh '''
+                        # Increase the EventEmitter limit to suppress the warning
+                        node -e "require('events').EventEmitter.defaultMaxListeners = 20;"
+                        npm install
+                    '''
+                }
       }
     }
      
