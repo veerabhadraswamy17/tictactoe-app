@@ -7,7 +7,11 @@ pipeline {
         
     stage('Cloning Git') {
       steps {
-        git 'https://github.com/veerabhadraswamy17/tictactoe-app.git'
+        script{
+          git branch: 'main',
+              credentialsId: '46efe307-58a8-473d-859c-9b6b8aab75ff',
+              url: 'https://github.com/veerabhadraswamy17/tictactoe-app.git'
+        }
       }
     }
         
