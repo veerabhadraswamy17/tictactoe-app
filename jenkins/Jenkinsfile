@@ -1,40 +1,26 @@
 pipeline {
-    agent {
-        kubernetes {
-            label 'my-custom-label' // Replace with the label of your choice
-            defaultContainer 'jnlp'
-            yaml """
-                apiVersion: v1
-                kind: Pod
-                metadata:
-                  labels:
-                    my-label: my-custom-label
-                spec:
-                  containers:
-                  - name: node
-                    image: node:lts
-                    command:
-                    - cat
-                    tty: true
-            """
-        }
+  agent any
+    
+  tools {nodejs "nodejs"}
+    
+  stages {
+        
+    stage('Cloning Git') {
+      steps {
+        git 'https://github.com/veerabhadraswamy17/tictactoe-app.git'
+      }
     }
-    stages {
-        stage('Build') {
-            steps {
-                container('node') {
-                    sh 'npm install'
-                }
-            }
-        }
-        stage('Run') {
-            steps {
-                container('node') {
-                    sh 'npm start' // Adjust the start command as per your application
-                }
-            }
-        }
-        // Add more stages as needed for your pipeline
+        
+    stage('Install dependencies') {
+      steps {
+        sh 'npm install'
+      }
     }
+     
+    stage('Test') {
+      steps {
+         sh 'npm test'
+      }
+    }      
+  }
 }
-
