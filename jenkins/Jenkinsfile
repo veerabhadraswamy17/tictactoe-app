@@ -54,7 +54,7 @@ pipeline {
     stage('Docker Build') {
     	agent any
       steps {
-      	sh 'docker build -t veerabhadraswami/tictactoe:1.0 .'
+      	sh 'docker build -t veerabhadraswami/tictactoe:${DOCKER_IMAGE_TAG} .'
       }
     }
 
@@ -68,8 +68,16 @@ pipeline {
       steps {
       	withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerhubUser')]) {
         	sh "docker login -u ${env.dockerhubUser} -p ${env.dockerhubPassword}"
-          sh 'docker push veerabhadraswami/tictactoe:1.0'
+          sh 'docker push veerabhadraswami/tictactoe:${DOCKER_IMAGE_TAG}'
+          
         }
+      }
+    }
+
+    stage('Docker Remove Local Image') {
+    	agent any
+      steps {
+      	sh 'docker rmi veerabhadraswami/tictactoe:${DOCKER_IMAGE_TAG}'
       }
     }
     
