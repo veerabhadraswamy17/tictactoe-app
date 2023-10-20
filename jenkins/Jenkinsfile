@@ -7,7 +7,7 @@ pipeline {
 
   environment {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-    DOCKER_IMAGE_TAG = "1.1" // Initialize the Docker image tag
+    DOCKER_IMAGE_TAG = "1.2" // Initialize the Docker image tag
   }
     
   stages {
@@ -51,13 +51,24 @@ pipeline {
         sh 'docker --version'
       }
     }
+    // stage('Docker Build') {
+    // 	agent any
+    //   steps {
+    //   	sh 'docker build -t veerabhadraswami/tictactoe:${DOCKER_IMAGE_TAG} .'
+    //   }
+    // }
     stage('Docker Build') {
-    	agent any
+      agent any
       steps {
-      	sh 'docker build -t veerabhadraswami/tictactoe:${DOCKER_IMAGE_TAG} .'
+        script {
+          sh "docker build -t veerabhadraswami/tictactoe:${DOCKER_IMAGE_TAG} ."
+          // Increment the Docker image tag for the next build
+          def currentTag = DOCKER_IMAGE_TAG.toDouble()
+          currentTag += 0.1
+          DOCKER_IMAGE_TAG = currentTag.toString()
+        }
       }
     }
-
     // stage('DockerHub Login') {
     //   steps {
     //     sh 'docker login -username $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
