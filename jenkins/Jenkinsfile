@@ -4,6 +4,10 @@ pipeline {
   tools {nodejs "nodejs"
          dockerTool "docker"
         }
+
+  environment {
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+  }
     
   stages {
 
@@ -52,6 +56,18 @@ pipeline {
       	sh 'docker build -t veerabhadraswami/tictactoe:latest .'
       }
     }
+
+    stage('DockerHub Login') {
+      steps {
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+      }
+    }
+
+    stage('Docker Push') {
+      steps {
+        sh 'docker push veerabhadraswami/tictactoe:1.0'
+      }
+    }
     // stage('Docker Build') {
     //   agent {
     //     docker {
@@ -65,5 +81,10 @@ pipeline {
     //   }
     // }
     
+  }
+    post {
+    always {
+      sh 'docker logout'
+    }
   }
 }
