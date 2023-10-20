@@ -55,7 +55,8 @@ pipeline {
         }
       }
       steps {
-        sh 'docker build -t veerabhadraswami/tictactoe:latest .'
+        // sh 'docker build -t veerabhadraswami/tictactoe:latest .'
+        sh 'docker --version'
       }
     }
     
