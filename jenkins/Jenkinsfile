@@ -40,25 +40,25 @@ pipeline {
       }
     }
    
-    // stage('Docker Build') {
-    // 	agent any
-    //   steps {
-    //   	sh 'sudo docker build -t veerabhadraswami/tictactoe:latest .'
-    //     //sh 'docker --version'
-    //   }
-    // }
     stage('Docker Build') {
-      agent {
-        docker {
-          image 'docker' // Specify the Docker tool name defined in Jenkins
-          args '-u root' // Run as root for Docker build (use with caution)
-        }
-      }
+    	agent any
       steps {
-        // sh 'docker build -t veerabhadraswami/tictactoe:latest .'
+      	// sh 'sudo docker build -t veerabhadraswami/tictactoe:latest .'
         sh 'docker --version'
       }
     }
+    stage('Docker Build') {
+    //   agent {
+    //     docker {
+    //       image 'docker' // Specify the Docker tool name defined in Jenkins
+    //       args '-u root' // Run as root for Docker build (use with caution)
+    //     }
+    //   }
+    //   steps {
+    //     // sh 'docker build -t veerabhadraswami/tictactoe:latest .'
+    //     sh 'docker --version'
+    //   }
+    // }
     
   }
 }
