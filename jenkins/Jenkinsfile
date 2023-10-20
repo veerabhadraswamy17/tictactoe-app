@@ -22,27 +22,28 @@ pipeline {
       }
     }
         
-    stage('Install dependencies') {
-      steps {
-        script {
-                    // Your Node.js build script
-                    sh '''
-                        npm install
-                    '''
-                }
-      }
-    }
+    // stage('Install dependencies') {
+    //   steps {
+    //     script {
+    //                 // Your Node.js build script
+    //                 sh '''
+    //                     npm install
+    //                 '''
+    //             }
+    //   }
+    // }
      
-    stage('Build') {
-      steps {
-         sh 'npm run build'
-      }
-    }
+    // stage('Build') {
+    //   steps {
+    //      sh 'npm run build'
+    //   }
+    // }
    
     stage('Docker Build') {
     	agent any
       steps {
-      	sh 'docker build -t veerabhadraswami/tictactoe:latest .'
+      	// sh 'docker build -t veerabhadraswami/tictactoe:latest .'
+        sh 'docker --version'
       }
     }
 
