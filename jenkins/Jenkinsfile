@@ -31,7 +31,7 @@ pipeline {
                         #node -e "require('events').EventEmitter.defaultMaxListeners = 20;"
                         #rm -rf node_modules package-lock.json
                         npm install
-                        npm start
+                        #npm start
                     '''
                 }
       }
