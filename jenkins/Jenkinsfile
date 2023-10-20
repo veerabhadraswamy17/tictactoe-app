@@ -7,7 +7,7 @@ pipeline {
 
   environment {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-    DOCKER_IMAGE_TAG = "2.0" // Initialize the Docker image tag
+    DOCKER_IMAGE_TAG = "1.1" // Initialize the Docker image tag
   }
     
   stages {
@@ -104,12 +104,10 @@ pipeline {
     always {
       sh 'docker logout'
     }
-       success {
+    success {
       script {
         // Increment the Docker image tag for the next build
-        def currentTag = Integer.parseInt(env.DOCKER_IMAGE_TAG)
-        currentTag++
-        env.DOCKER_IMAGE_TAG = currentTag.toString()
+        DOCKER_IMAGE_TAG += 0.1
       }
     }
   }
