@@ -1,8 +1,9 @@
 pipeline {
   agent any
     
-  tools {nodejs "nodejs"}
-         // docker "docker"}
+  tools {nodejs "nodejs"
+         docker "docker"
+        }
     
   stages {
 
@@ -39,14 +40,24 @@ pipeline {
       }
     }
    
+    // stage('Docker Build') {
+    // 	agent any
+    //   steps {
+    //   	sh 'sudo docker build -t veerabhadraswami/tictactoe:latest .'
+    //     //sh 'docker --version'
+    //   }
+    // }
     stage('Docker Build') {
-    	agent any
+      agent {
+        docker {
+          image 'docker' // Specify the Docker tool name defined in Jenkins
+          args '-u root' // Run as root for Docker build (use with caution)
+        }
+      }
       steps {
-      	sh 'sudo docker build -t veerabhadraswami/tictactoe:latest .'
-        //sh 'docker --version'
+        sh 'docker build -t veerabhadraswami/tictactoe:latest .'
       }
     }
-
     
   }
 }
