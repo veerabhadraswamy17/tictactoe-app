@@ -57,17 +57,26 @@ pipeline {
       }
     }
 
-    stage('DockerHub Login') {
-      steps {
-        sh 'docker login -username $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
-      }
-    }
-
+    // stage('DockerHub Login') {
+    //   steps {
+    //     sh 'docker login -username $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
+    //   }
+    // }
     stage('Docker Push') {
+    	agent any
       steps {
-        sh 'docker push veerabhadraswami/tictactoe:1.0'
+      	withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerhubPassword', usernameVariable: 'dockerhubUser')]) {
+        	sh "docker login -u ${env.dockerhubUser} -p ${env.dockerhubPassword}"
+          sh 'docker push veerabhadraswami/tictactoe:1.0'
+        }
       }
     }
+    
+    // stage('Docker Push') {
+    //   steps {
+    //     sh 'docker push veerabhadraswami/tictactoe:1.0'
+    //   }
+    // }
     // stage('Docker Build') {
     //   agent {
     //     docker {
