@@ -5,7 +5,13 @@ pipeline {
          // docker "docker"}
     
   stages {
-        
+
+    stage('Clear Workspace') {
+            steps {
+                // Delete the workspace
+                deleteDir()
+            }
+        }
     stage('Cloning Git') {
       steps {
         script{
