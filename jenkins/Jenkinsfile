@@ -10,7 +10,7 @@ pipeline {
       steps {
         script{
           git branch: 'main',
-              credentialsId: 'f71be2b1-73c6-4cc3-9f78-0759dffcbe45',
+              credentialsId: 'github',
               url: 'https://github.com/veerabhadraswamy17/tictactoe-app.git'
         }
       }
