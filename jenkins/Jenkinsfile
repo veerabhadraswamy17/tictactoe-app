@@ -12,15 +12,15 @@ pipeline {
                 deleteDir()
             }
         }
-    stage('Cloning Git') {
-      steps {
-        script{
-          git branch: 'main',
-              credentialsId: 'github',
-              url: 'https://github.com/veerabhadraswamy17/tictactoe-app.git'
-        }
-      }
-    }
+    // stage('Cloning Git') {
+    //   steps {
+    //     script{
+    //       git branch: 'main',
+    //           credentialsId: 'github',
+    //           url: 'https://github.com/veerabhadraswamy17/tictactoe-app.git'
+    //     }
+    //   }
+    // }
         
     // stage('Install dependencies') {
     //   steps {
