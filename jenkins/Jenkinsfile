@@ -115,12 +115,7 @@ pipeline {
     always {
       sh 'docker logout'
     }
-    success {
-      script {
-        // Increment the Docker image tag for the next build
-        DOCKER_IMAGE_TAG += 0.1
-      }
-    }
+    
   }
      
 }
