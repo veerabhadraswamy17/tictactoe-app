@@ -27,11 +27,7 @@ pipeline {
         script {
                     // Your Node.js build script
                     sh '''
-                        # Increase the EventEmitter limit to suppress the warning
-                        #node -e "require('events').EventEmitter.defaultMaxListeners = 20;"
-                        #rm -rf node_modules package-lock.json
                         npm install
-                        #npm start
                     '''
                 }
       }
@@ -42,22 +38,7 @@ pipeline {
          sh 'npm run build'
       }
     }
-   stage('Install Docker') {
-            steps {
-                script {
-                    // Install Docker
-                    sh '''
-                        sudo apt-get update
-                        sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
-                        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-                        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-                        sudo apt-get update
-                        sudo apt-get -y install docker-ce
-                    '''
-                }
-            }
-        }
-
+   
     stage('Docker Build') {
     	agent any
       steps {
