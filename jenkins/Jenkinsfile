@@ -96,8 +96,7 @@ pipeline {
     always {
       sh 'docker logout'
     }
-  }
-      success {
+       success {
       script {
         // Increment the Docker image tag for the next build
         def currentTag = Integer.parseInt(env.DOCKER_IMAGE_TAG)
@@ -105,4 +104,6 @@ pipeline {
         env.DOCKER_IMAGE_TAG = currentTag.toString()
       }
     }
+  }
+     
 }
