@@ -49,7 +49,7 @@ pipeline {
     stage('Docker Build') {
     	agent any
       steps {
-      	sh 'su docker build -t veerabhadraswami/tictactoe:latest .'
+      	sh 'docker build -t veerabhadraswami/tictactoe:latest .'
       }
     }
     // stage('Docker Build') {
