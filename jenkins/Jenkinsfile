@@ -40,11 +40,16 @@ pipeline {
       }
     }
    
+    stage('Check Docker Version') {
+    	agent any
+      steps {
+        sh 'docker --version'
+      }
+    }
     stage('Docker Build') {
     	agent any
       steps {
-      	// sh 'sudo docker build -t veerabhadraswami/tictactoe:latest .'
-        sh 'docker --version'
+      	sh 'sudo docker build -t veerabhadraswami/tictactoe:latest .'
       }
     }
     // stage('Docker Build') {
