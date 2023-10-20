@@ -47,7 +47,7 @@ pipeline {
         sh 'docker --version'
       }
     }
-    stage('Docker Build') {
+    // stage('Docker Build') {
     //   agent {
     //     docker {
     //       image 'docker' // Specify the Docker tool name defined in Jenkins
