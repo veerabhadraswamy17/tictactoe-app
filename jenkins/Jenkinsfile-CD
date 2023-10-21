@@ -16,26 +16,17 @@ pipeline {
       }
     }
         stage('Deploy the Deployment to AKS') {
-            steps {
-                script {
-                    azureCLI([credentialsType: 'Service Principal (automatic)', subscriptionId: AZURE_CREDENTIALS, serviceNamePrincipalId: AZURE_CREDENTIALS, servicePrincipalKey: AZURE_CREDENTIALS]) {
-                        sh "az aks get-credentials --resource-group $AZURE_RESOURCE_GROUP --name $AKS_CLUSTER_NAME"
-                        sh "kubectl apply -f Deployment.yml"
-                    }
-                }
-            }
-        }
-        stage('Deploy the Service to AKS') {
-            steps {
-                script {
-                    azureCLI([credentialsType: 'Service Principal (automatic)', subscriptionId: AZURE_CREDENTIALS, serviceNamePrincipalId: AZURE_CREDENTIALS, servicePrincipalKey: AZURE_CREDENTIALS]) {
-                        sh "az aks get-credentials --resource-group $AZURE_RESOURCE_GROUP --name $AKS_CLUSTER_NAME"
-                        sh "kubectl apply -f Service.yml"
-                    }
-                }
-            }
-        }
+    withCredentials([azureServicePrincipal('<myServicePrincipal>')]) {
+      // login Azure
+      sh '''
+        az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
+        az account set -s $AZURE_SUBSCRIPTION_ID
+      '''
+      sh 'kubectl apply -f Deployment.yaml'
+      // log out
+      sh 'az logout'
 
-        
+    }
+        } 
     }
 }
