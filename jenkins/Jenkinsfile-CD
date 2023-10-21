@@ -27,7 +27,9 @@ stage('Install Azure CLI') {
         sh '''
           az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
         '''
+        sh "az aks get-credentials --resource-group $AZURE_RESOURCE_GROUP --name $AKS_CLUSTER_NAME"
         sh 'kubectl apply -f Deployment.yaml'
+        sh 'kubectl apply -f Service.yaml'
         // log out
         sh 'az logout'
 
