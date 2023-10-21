@@ -6,6 +6,15 @@ pipeline {
         AKS_CLUSTER_NAME = 'dev-aks-01'
     }
     stages {
+    stage('Cloning Git') {
+      steps {
+        script{
+          git branch: 'main',
+              credentialsId: 'github',
+              url: 'https://github.com/veerabhadraswamy17/tictactoe-app.git'
+        }
+      }
+    }
         stage('Deploy the Deployment to AKS') {
             steps {
                 script {
