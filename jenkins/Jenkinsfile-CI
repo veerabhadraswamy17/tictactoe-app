@@ -52,12 +52,7 @@ pipeline {
         sh 'docker --version'
       }
     }
-    // stage('Docker Build') {
-    // 	agent any
-    //   steps {
-    //   	sh 'docker build -t veerabhadraswami/tictactoe:${DOCKER_IMAGE_TAG} .'
-    //   }
-    // }
+
     stage('Docker Build') {
       agent any
       steps {
