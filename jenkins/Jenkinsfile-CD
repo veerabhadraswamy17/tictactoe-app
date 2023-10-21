@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    environment {
+        AZURE_CREDENTIALS = credentials('AzureServicePrincipalCredentials')
+        AZURE_RESOURCE_GROUP = 'aks-rg'
+        AKS_CLUSTER_NAME = 'dev-aks-01'
+    }
+    stages {
+        stage('Deploy the Deployment to AKS') {
+            steps {
+                script {
+                    azureCLI([credentialsType: 'Service Principal (automatic)', subscriptionId: AZURE_CREDENTIALS, serviceNamePrincipalId: AZURE_CREDENTIALS, servicePrincipalKey: AZURE_CREDENTIALS]) {
+                        sh "az aks get-credentials --resource-group $AZURE_RESOURCE_GROUP --name $AKS_CLUSTER_NAME"
+                        sh "kubectl apply -f Deployment.yml"
+                    }
+                }
+            }
+        }
+        stage('Deploy the Service to AKS') {
+            steps {
+                script {
+                    azureCLI([credentialsType: 'Service Principal (automatic)', subscriptionId: AZURE_CREDENTIALS, serviceNamePrincipalId: AZURE_CREDENTIALS, servicePrincipalKey: AZURE_CREDENTIALS]) {
+                        sh "az aks get-credentials --resource-group $AZURE_RESOURCE_GROUP --name $AKS_CLUSTER_NAME"
+                        sh "kubectl apply -f Service.yml"
+                    }
+                }
+            }
+        }
+
+        
+    }
+}
