@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: tictactoe-app
-          image: veerabhadraswami/tictactoe:latest
+          image: veerabhadraswami/tictactoe:1.2
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
